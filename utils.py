@@ -65,3 +65,15 @@ def shortestTimeOnFacebook(facebookDF):
     df = facebookDF[facebookDF.tenure == facebookDF['tenure'].min()]
 
     return {'userid': (int)(df.iloc[0]['userid']), 'tenure': (int)(df.iloc[0]['tenure'])}
+
+
+def nLargest(facebookDF, n, queryAttr):
+    df = facebookDF.nlargest(n, queryAttr)
+
+    userids = []
+    attribute = []
+    for index, row in df.iterrows():
+        userids.append(row['userid'])
+        attribute.append(row[queryAttr])
+
+    return {'userid': userids, queryAttr: attribute}
