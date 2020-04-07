@@ -4,8 +4,9 @@ from utils import *
 
 if __name__ == "__main__":
     facebookDF = pd.read_csv('data/pseudo_facebook.csv')
-
-    # print(mostLikedUser(facebookDF))
+    print(fakestUser(facebookDF))
+    print(fakestFriend(facebookDF))
+    #print(mostLikedUser(facebookDF))
     # print(mostLikesHandedOut(facebookDF))
     # print(friendliestGuy(facebookDF))
     # print(guyEveryoneWantsToKnow(facebookDF))

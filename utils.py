@@ -1,5 +1,28 @@
+import math
+
 import pandas
 
+def fakestUser(facebookDF):
+    count = 0
+    lis_t = []
+    for a in facebookDF.iterrows():
+        rank = a[1]['likes']/(a[1]['likes_received'] + 1)
+        lis_t.append(rank)
+        count += 1
+        #if count == 10:
+        #   print(lis_t)
+            #exit()
+    return facebookDF.iloc[lis_t.index(max(lis_t))]
+
+def fakestFriend(facebookDF):
+    lis_t = []
+    for a in facebookDF.iterrows():
+        if a[1]['friend_count'] != 0:
+            rank = a[1]['likes'] / (a[1]['friend_count'] + 1) - a[1]['friend_count']
+        else:
+            rank = 9999999
+        lis_t.append(rank)
+    return facebookDF.iloc[lis_t.index(min(lis_t))]
 
 def mostLikedUser(facebookDF):
     df = facebookDF[facebookDF.likes_received ==
