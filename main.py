@@ -21,3 +21,7 @@ if __name__ == "__main__":
 
     influentialDF = mostInfluential(facebookDF)
     print(nLargest(influentialDF, 3, 'influence'))
+
+    upAndComers = mostInfluential(
+        facebookDF[facebookDF['tenure'] < facebookDF['tenure'].mean() - 100])
+    print(nLargest(upAndComers, 3, 'influence'))
