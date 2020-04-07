@@ -1,5 +1,6 @@
 import pandas as pd
 from utils import *
+from influential import *
 
 
 if __name__ == "__main__":
@@ -17,3 +18,6 @@ if __name__ == "__main__":
     # print(shortestTimeOnFacebook(facebookDF))
 
     # print(nLargest(facebookDF, 3, 'likes_received'))
+
+    influentialDF = mostInfluential(facebookDF)
+    print(nLargest(influentialDF, 3, 'influence'))
