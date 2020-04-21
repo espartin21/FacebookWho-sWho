@@ -3,8 +3,6 @@ import pandas as pd
 
 
 def fakestUser(facebookDF):
-    print("FAKEST USER")
-
     subsetDF = facebookDF.loc[
         (facebookDF['likes'] > 0) & (facebookDF['likes_received'] > 0), ('userid', 'likes', 'likes_received')]
     subsetDF['fakestUser'] = subsetDF.apply(fakeUserRanking, axis=1)
@@ -12,12 +10,10 @@ def fakestUser(facebookDF):
 
 
 def fakestFriend(facebookDF):
-    print("FAKEST FRIEND")
-
     subsetDF = facebookDF.loc[
         (facebookDF['likes'] > 0) & (facebookDF['friend_count'] > 0), ('userid', 'likes', 'friend_count')]
     subsetDF['fakestFriend'] = subsetDF.apply(fakeFriendRanking, axis=1)
-    print(subsetDF)
+
     return subsetDF
 
 
@@ -35,7 +31,7 @@ def fakeFriendRanking(row):
 
 def nSmallest(facebookDF, n, queryAttr):
     df = facebookDF.nsmallest(n, queryAttr)
-    print(df)
+
     userids = []
     attribute = []
     for index, row in df.iterrows():
@@ -68,7 +64,6 @@ class KNN:
                 l_ist.append("fakestFriend")
         subsetDF['label'] = l_ist
         self.subsetDFTrain = subsetDF
-        print(subsetDF)
 
     def predict(self, listUser):
         similarity = []
