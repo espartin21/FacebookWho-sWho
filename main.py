@@ -7,7 +7,6 @@ from influential import *
 from friendly import *
 
 if __name__ == "__main__":
-
     facebookDF = pd.read_csv('data/pseudo_facebook.csv')
 
     print("Finding most liked user...")
