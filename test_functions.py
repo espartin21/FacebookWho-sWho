@@ -1,5 +1,4 @@
 import math
-
 import pandas as pd
 
 
@@ -23,16 +22,14 @@ def fakestFriend(facebookDF):
 
 
 def fakeUserRanking(row):
-    # print("called function")
     rank = row['likes'] / (row['likes_received'] + 1)
-    # print(rank)
+
     return rank
 
 
 def fakeFriendRanking(row):
     rank = (row['friend_count']) / (row['likes'] + 1)
-    # else:
-    #    rank = 9999999
+
     return rank
 
 
@@ -50,29 +47,21 @@ def nSmallest(facebookDF, n, queryAttr):
 
 def desktopUser(facebookDF, userID):
     a = facebookDF.loc[facebookDF['userid'] == userID]
-    # print(a['likes'])
-    # print(a['mobile_likes'])
-    # print(a['www_likes'])
     if a['mobile_likes'].item() - a['www_likes'].item() < 0:
         return True
     return False
 
 
-# """
 class KNN:
     def __init__(self):
         self.subsetDFTrain = pd.read_csv('data/pseudo_facebook.csv')
 
     def train(self, facebookDF):
         subsetDF = facebookDF
-        # subsetDF = facebookDF.loc[(facebookDF['likes']) & (facebookDF['friend_count']) & (facebookDF[
-        # 'likes_received']), ('userid', 'likes', 'friend_count', 'likes_received')]
         subsetDF['fakestUser'] = subsetDF.apply(fakeUserRanking, axis=1)
         subsetDF['fakestFriend'] = subsetDF.apply(fakeFriendRanking, axis=1)
         l_ist = []
         for row in subsetDF.iterrows():
-            # if row[1]['userid'] == 1389606:
-            #    print(row)
             if row[1]['fakestUser'] > row[1]['fakestFriend']:
                 l_ist.append("fakestUser")
             else:
@@ -92,14 +81,12 @@ class KNN:
                 bota += pow(item[0], 2)
             for a in row[1]:
                 if isinstance(a, int):
-                    # print(a)
                     botb += pow(a, 2)
             s = top / (math.sqrt(bota) * math.sqrt(botb))
             similarity.append((s, row[1]['label']))
         n_doc = {}
         largestVal = 0
         largestLabel = ""
-        # labelList = []
         for i in range(5):
             spot = similarity.index(max(similarity))
             label = similarity[spot][1]
@@ -118,4 +105,3 @@ class KNN:
             similarity.remove(max(similarity))
 
         return largestLabel
-    # """
