@@ -1,6 +1,3 @@
-import pandas
-
-
 def mostLikedUser(facebookDF):
     df = facebookDF[facebookDF.likes_received ==
                     facebookDF['likes_received'].max()]
@@ -73,7 +70,7 @@ def nLargest(facebookDF, n, queryAttr):
     userids = []
     attribute = []
     for index, row in df.iterrows():
-        userids.append(row['userid'])
+        userids.append((int)(row['userid']))
         attribute.append(row[queryAttr])
 
     return {'userid': userids, queryAttr: attribute}
