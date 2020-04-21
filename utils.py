@@ -1,6 +1,3 @@
-import pandas
-
-
 def mostLikedUser(facebookDF):
     df = facebookDF[facebookDF.likes_received ==
                     facebookDF['likes_received'].max()]
