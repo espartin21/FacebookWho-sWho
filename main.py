@@ -10,20 +10,25 @@ if __name__ == "__main__":
 
     facebookDF = pd.read_csv('data/pseudo_facebook.csv')
 
-    # print(mostLikedUser(facebookDF))
-    # print(mostLikesHandedOut(facebookDF))
-    # print(friendliestGuy(facebookDF))
-    # print(guyEveryoneWantsToKnow(facebookDF))
-    # print(longestTimeOnFacebook(facebookDF))
-    # print(leastLikedUser(facebookDF))
-    # print(leastLikesHandedOut(facebookDF))
-    # print(unfriendliestGuy(facebookDF))
-    # print(guyNobodyWantsToKnow(facebookDF))
-    # print(shortestTimeOnFacebook(facebookDF))
+    print("Finding most liked user...")
+    print(mostLikedUser(facebookDF))
+    print('\n')
 
-    # print(nLargest(facebookDF, 3, 'likes_received'))
+    print("Finding user with most likes handed out...")
+    print(mostLikesHandedOut(facebookDF))
+    print('\n')
 
-    # print(mostInfluential(facebookDF))
+    print("Finding friendliest guy...")
+    print(friendliestGuy(facebookDF))
+    print('\n')
+
+    print("Finding user everyone wants to know...")
+    print(guyEveryoneWantsToKnow(facebookDF))
+    print('\n')
+
+    print("Finding user with longest tenure on facebook...")
+    print(longestTimeOnFacebook(facebookDF))
+    print('\n')
 
     # compute top 'n' celebrity doppelganger pairs
     n = 5
@@ -72,7 +77,6 @@ if __name__ == "__main__":
     print(isHighlyInactive(facebookDF, userID))
     print('\n')
 
-    # Queries
     influentialDF = mostInfluential(facebookDF)
     print("Top 3 most influential users:")
     print(nLargest(influentialDF, 3, 'influence'))
@@ -94,7 +98,6 @@ if __name__ == "__main__":
     print(nLargest(fakeDF, 3, 'fakestFriend'))
     print('\n')
 
-    # Classifiers
     friendlyDF = friendly(facebookDF)
     userid = 1654565
     friendlyClassifier = areYouFriendly(friendlyDF, userid)
