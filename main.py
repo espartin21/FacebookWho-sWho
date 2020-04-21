@@ -2,6 +2,7 @@ import pandas as pd
 from utils import *
 from influential import *
 from doppel import *
+from activity import *
 
 if __name__ == "__main__":
 
@@ -55,4 +56,16 @@ if __name__ == "__main__":
     picks = topOpposites(facebookDF, n)
     for pick in picks:
         print(pick)
+    '''
+
+    # determine whether an arbitrary user is highly active
+    '''
+    userID = 1066459
+    print(isHighlyActive(facebookDF, userID))
+    '''
+
+    # determine whether an arbitrary user is highly inactive
+    '''
+    userID = 1646284
+    print(isHighlyInactive(facebookDF, userID))
     '''
