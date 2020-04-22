@@ -68,10 +68,10 @@ def isHighlyInactive(facebookDF, userID):
         friendshipsInitiatedScore = 0
     else:
         friendshipsInitiatedScore = user['friendships_initiated'] / user['tenure']
-    if friendshipsInitiatedScore <= 0.01:
+    if friendshipsInitiatedScore <= 0.02:
         friendsInactive = True
 
-    if friendsInactive | likesInactive:
+    if friendsInactive & likesInactive:
         highlyInactive = True
 
     return highlyInactive
