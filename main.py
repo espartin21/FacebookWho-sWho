@@ -88,7 +88,7 @@ if __name__ == "__main__":
     print('\n')
 
     fakeDF = fakestUser(facebookDF)
-    print("Top 3 Fakest Users: ")
+    print("Top 3 Like Bots: ")
     print(nLargest(fakeDF, 3, 'fakestUser'))
     print('\n')
 
@@ -116,8 +116,13 @@ if __name__ == "__main__":
     print('\n')
 
     knn = KNN()
-    knn.train(facebookDF)
-    a = [(2098916, 'userid'), (69, 'age'), (2, 'dob_day'), (1944, 'dob_year'), (10, 'dob_month'), (506, 'tenure'), (54, 'friend_count'),
-         (23, 'friendships_initiated'), (32, 'likes'), (114, 'likes_received'), (29, 'mobile_likes'), (49, 'mobile_likes_received'), (3, 'www_likes'), (65, 'www_likes_received')]
-    print("Prediciting what label user " + str(a[0][0]) + " belongs too...")
+    knn.label(facebookDF)
+    #a = [(2098916, 'userid'), (69, 'age'), (2, 'dob_day'), (1944, 'dob_year'), (10, 'dob_month'), (506, 'tenure'), (1, 'friend_count'),
+    #     (23, 'friendships_initiated'), (32, 'likes'), (114, 'likes_received'), (29, 'mobile_likes'), (49, 'mobile_likes_received'), (3, 'www_likes'), (65, 'www_likes_received')]
+
+    a = [(1364866, 'userid'), (18, 'age'), (22, 'dob_day'), (1995, 'dob_year'), (5, 'dob_month'), (279, 'tenure'),
+         (27, 'friend_count'),
+         (21, 'friendships_initiated'), (25, 'likes'), (39, 'likes_received'), (22, 'mobile_likes'),
+         (26, 'mobile_likes_received'), (3, 'www_likes'), (13, 'www_likes_received')]
+    print("Predicting what label user " + str(a[0][0]) + " belongs too...")
     print("User " + str(a[0][0]) + " is a " + knn.predict(a))

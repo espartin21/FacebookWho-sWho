@@ -1,30 +1,34 @@
 import math
+
 import pandas as pd
 
 
-def fakestUser(facebookDF):
+def LikeBot(facebookDF):
     subsetDF = facebookDF.loc[
-        (facebookDF['likes'] > 0) & (facebookDF['likes_received'] > 0), ('userid', 'likes', 'likes_received')]
+        (facebookDF['likes'] > 0) & (facebookDF['likes_received'] > 0) & (facebookDF['friend_count'] > 0), ('userid', 'likes', 'likes_received', 'friend_count')]
     subsetDF['fakestUser'] = subsetDF.apply(fakeUserRanking, axis=1)
     return subsetDF
 
 
 def fakestFriend(facebookDF):
     subsetDF = facebookDF.loc[
-        (facebookDF['likes'] > 0) & (facebookDF['friend_count'] > 0), ('userid', 'likes', 'friend_count')]
+        (facebookDF['likes'] > 0) & (facebookDF['friend_count'] > 0) & (facebookDF['friendships_initiated'] > 0), ('userid', 'likes', 'friend_count', 'friendships_initiated')]
     subsetDF['fakestFriend'] = subsetDF.apply(fakeFriendRanking, axis=1)
 
     return subsetDF
 
 
-def fakeUserRanking(row):
-    rank = row['likes'] / (row['likes_received'] + 1)
+def LikeBotRanking(row):
+    rank = row['likes'] / (row['likes_received'] + 1) + (row['friend_count']/500)
 
     return rank
 
+def friendliness(row):
+    rank = row['friendships_initiated'] / (row['friend_count']+1)
+    return rank
 
 def fakeFriendRanking(row):
-    rank = (row['friend_count']) / (row['likes'] + 1)
+    rank = (row['friend_count']) / (row['likes'] + 1) + row['friendships_initiated'] / (row['friend_count'] + 1)
 
     return rank
 
@@ -47,21 +51,32 @@ def desktopUser(facebookDF, userID):
         return True
     return False
 
+def influenceRanking(row):
+    return row['likes_received'] / (row['friend_count'] + 1)
 
 class KNN:
     def __init__(self):
         self.subsetDFTrain = pd.read_csv('data/pseudo_facebook.csv')
 
-    def train(self, facebookDF):
+    def label(self, facebookDF):
         subsetDF = facebookDF
-        subsetDF['fakestUser'] = subsetDF.apply(fakeUserRanking, axis=1)
+        subsetDF['likeBot'] = subsetDF.apply(LikeBotRanking, axis=1)
         subsetDF['fakestFriend'] = subsetDF.apply(fakeFriendRanking, axis=1)
+        subsetDF['friendliness'] = subsetDF.apply(friendliness, axis=1)
+        subsetDF['influence'] = subsetDF.apply(influenceRanking, axis=1)
         l_ist = []
+
         for row in subsetDF.iterrows():
-            if row[1]['fakestUser'] > row[1]['fakestFriend']:
-                l_ist.append("fakestUser")
-            else:
-                l_ist.append("fakestFriend")
+            maxL = [(row[1]['likeBot'], 'Like Bot'), (row[1]['fakestFriend'], 'Fake Friend'),
+                    (row[1]['friendliness'], 'Friendly'),(row[1]['influence'], 'Influencer')]
+            spot = maxL.index(max(maxL))
+            label = maxL[spot][1]
+            if row[1]['userid'] == 1364866:
+                print(row)
+                print()
+                print("Label: ", label)
+                print()
+            l_ist.append(label)
         subsetDF['label'] = l_ist
         self.subsetDFTrain = subsetDF
 
@@ -71,20 +86,31 @@ class KNN:
             top = 0.0
             bota = 0.0
             botb = 0.0
+            count = 0
             for item in listUser:
-                top += row[1][item[1]] * item[0]
-                bota += pow(item[0], 2)
+                if count != 0:
+                    
+                    top += row[1][item[1]] * item[0]
+                    bota += pow(item[0], 2)
+                count = count + 1
+            count = 0
+            #print("Row: ", row)
             for a in row[1]:
-                if isinstance(a, int):
-                    botb += pow(a, 2)
+                if count != 0:
+                    if isinstance(a, int):
+                        #print("a: ", a)
+                        botb += pow(a, 2)
+                count = count + 1
             s = top / (math.sqrt(bota) * math.sqrt(botb))
             similarity.append((s, row[1]['label']))
         n_doc = {}
         largestVal = 0
         largestLabel = ""
+        print("Labels of most similar users")
         for i in range(5):
             spot = similarity.index(max(similarity))
             label = similarity[spot][1]
+            print(label)
             if n_doc.get(label) is not None:
                 n = n_doc.get(label)
                 n += 1
