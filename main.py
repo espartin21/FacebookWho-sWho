@@ -87,9 +87,9 @@ if __name__ == "__main__":
     print(nLargest(upAndComers, 3, 'influence'))
     print('\n')
 
-    fakeDF = fakestUser(facebookDF)
+    fakeDF = LikeBot(facebookDF)
     print("Top 3 Like Bots: ")
-    print(nLargest(fakeDF, 3, 'fakestUser'))
+    print(nLargest(fakeDF, 3, 'likeBot'))
     print('\n')
 
     fakeDF = fakestFriend(facebookDF)

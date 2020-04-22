@@ -6,7 +6,7 @@ import pandas as pd
 def LikeBot(facebookDF):
     subsetDF = facebookDF.loc[
         (facebookDF['likes'] > 0) & (facebookDF['likes_received'] > 0) & (facebookDF['friend_count'] > 0), ('userid', 'likes', 'likes_received', 'friend_count')]
-    subsetDF['fakestUser'] = subsetDF.apply(fakeUserRanking, axis=1)
+    subsetDF['likeBot'] = subsetDF.apply(LikeBotRanking, axis=1)
     return subsetDF
 
 
@@ -89,7 +89,7 @@ class KNN:
             count = 0
             for item in listUser:
                 if count != 0:
-                    
+
                     top += row[1][item[1]] * item[0]
                     bota += pow(item[0], 2)
                 count = count + 1
