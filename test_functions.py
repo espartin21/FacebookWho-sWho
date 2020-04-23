@@ -71,11 +71,6 @@ class KNN:
                     (row[1]['friendliness'], 'Friendly'),(row[1]['influence'], 'Influencer')]
             spot = maxL.index(max(maxL))
             label = maxL[spot][1]
-            if row[1]['userid'] == 1364866:
-                print(row)
-                print()
-                print("Label: ", label)
-                print()
             l_ist.append(label)
         subsetDF['label'] = l_ist
         self.subsetDFTrain = subsetDF

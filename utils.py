@@ -74,3 +74,9 @@ def nLargest(facebookDF, n, queryAttr):
         attribute.append(row[queryAttr])
 
     return {'userid': userids, queryAttr: attribute}
+
+def findUser(facebookDF, id):
+    for row in facebookDF.iterrows():
+        if row[1]['userid'] == id:
+            print(row)
+            print()
