@@ -129,9 +129,9 @@ if __name__ == "__main__":
     knn.label(facebookDF)
     findUser(facebookDF, 1364866)
     a = [(1364866, 'userid'), (18, 'age'), (22, 'dob_day'), (1995, 'dob_year'), (5, 'dob_month'), (279, 'tenure'),
-         (27, 'friend_count'),
-         (21, 'friendships_initiated'), (25, 'likes'), (39, 'likes_received'), (22, 'mobile_likes'),
+         (27, 'friend_count'), (21, 'friendships_initiated'), (25, 'likes'), (39, 'likes_received'), (22, 'mobile_likes'),
          (26, 'mobile_likes_received'), (3, 'www_likes'), (13, 'www_likes_received')]
+
     print("Predicting what label user " + str(a[0][0]) + " belongs too...")
     print("User " + str(a[0][0]) + " is a " + knn.predict(a))
 
